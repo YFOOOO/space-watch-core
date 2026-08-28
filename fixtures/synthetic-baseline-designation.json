@@ -1,0 +1,11 @@
+{
+  "schema_version": "space-watch-comparison-baseline-designation-v0.2",
+  "designation_id": "synthetic-demo-baseline-v0.2",
+  "mission_id": "synthetic-demo-mission",
+  "baseline_file": "fixtures/synthetic-baseline.json",
+  "baseline_file_sha256": "4ae95435a8340486a4c5703560038ffdfc854f210d3f959467d75930d9078db4",
+  "accepted_as_comparison_baseline": true,
+  "project_truth": false,
+  "authority_scope": "synthetic comparison fixture only",
+  "historical_artifact_modified": false
+}

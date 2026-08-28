@@ -1,0 +1,37 @@
+{
+  "schema_version": "space-watch-source-attempt-input-v0.2",
+  "mission_id": "synthetic-demo-mission",
+  "acquisition_mode": "synthetic_fixture",
+  "source_acquisition_effect": false,
+  "project_effect": "none",
+  "attempts": [
+    {
+      "source_id": "synthetic-source-alpha",
+      "claim_family": "mission.window_status",
+      "carrier_class": "synthetic_fixture",
+      "attempted_at": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "attempt_count": 1,
+      "login_used": false,
+      "retry_used": false,
+      "alternate_carrier_used": false,
+      "projection_schema": "synthetic-window-v1",
+      "typed_content": {"status": "scheduled", "window": "2026-02-01T00:00:00Z"},
+      "limitations": ["synthetic fixture; not a real-world observation"]
+    },
+    {
+      "source_id": "synthetic-source-beta",
+      "claim_family": "vehicle.test_status",
+      "carrier_class": "synthetic_fixture",
+      "attempted_at": "2026-01-01T00:00:00Z",
+      "status": "unavailable",
+      "attempt_count": 1,
+      "login_used": false,
+      "retry_used": false,
+      "alternate_carrier_used": false,
+      "projection_schema": "synthetic-test-v1",
+      "typed_content": null,
+      "limitations": ["synthetic unavailable branch"]
+    }
+  ]
+}

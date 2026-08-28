@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "space-watch-comparison-baseline-v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "mission_id", "project_truth", "candidates"],
+  "properties": {
+    "schema_version": {"const": "space-watch-comparison-baseline-v0.2"},
+    "mission_id": {"type": "string", "minLength": 1},
+    "project_truth": {"const": false},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_id", "claim_family", "projection_schema", "typed_content"],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 1},
+          "claim_family": {"type": "string", "minLength": 1},
+          "projection_schema": {"type": "string", "minLength": 1},
+          "typed_content": {"type": ["object", "null"]}
+        }
+      }
+    }
+  }
+}

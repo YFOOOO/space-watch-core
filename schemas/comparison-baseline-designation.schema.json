@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "space-watch-comparison-baseline-designation-v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "designation_id", "mission_id", "baseline_file", "baseline_file_sha256", "accepted_as_comparison_baseline", "project_truth", "authority_scope", "historical_artifact_modified"],
+  "properties": {
+    "schema_version": {"const": "space-watch-comparison-baseline-designation-v0.2"},
+    "designation_id": {"type": "string", "minLength": 1},
+    "mission_id": {"type": "string", "minLength": 1},
+    "baseline_file": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*(?:^|/)\\.(?:/|$))(?!.*//)(?!.*\\\\).+[^/]$"},
+    "baseline_file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "accepted_as_comparison_baseline": {"const": true},
+    "project_truth": {"const": false},
+    "authority_scope": {"const": "synthetic comparison fixture only"},
+    "historical_artifact_modified": {"const": false}
+  }
+}

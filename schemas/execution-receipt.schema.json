@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "space-watch-execution-receipt-v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "attempt_id", "executed_at", "run_kind", "actual_command", "working_directory", "read_paths", "write_paths", "input_sha256", "baseline_sha256", "candidate_bundle_sha256", "candidate_count", "external_execution_effect", "effect_reconciliation_required", "effect_reconciliation_owner", "source_acquisition_effect", "project_effect", "accepted", "project_truth", "notification_sent", "project_written", "routine_created", "stop_reason", "next_authority"],
+  "properties": {
+    "schema_version": {"const": "space-watch-execution-receipt-v0.2"},
+    "attempt_id": {"type": "string", "minLength": 1},
+    "executed_at": {"type": "string", "format": "date-time"},
+    "run_kind": {"const": "synthetic_fixture"},
+    "actual_command": {"type": "string", "minLength": 1},
+    "working_directory": {"type": "string", "minLength": 1},
+    "read_paths": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+    "write_paths": {"type": "array", "minItems": 5, "items": {"type": "string"}},
+    "input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "baseline_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "candidate_bundle_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "candidate_count": {"type": "integer", "minimum": 1},
+    "external_execution_effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority_owner", "runner_observation", "attachment", "cloud_root_created", "cloud_command_executed"],
+      "properties": {
+        "authority_owner": {"const": "executor_or_external_interaction_receipt"},
+        "runner_observation": {"const": "not_observed_by_runner"},
+        "attachment": {"$ref": "#/$defs/unobserved_effect"},
+        "cloud_root_created": {"$ref": "#/$defs/unobserved_effect"},
+        "cloud_command_executed": {"$ref": "#/$defs/unobserved_effect"}
+      }
+    },
+    "effect_reconciliation_required": {"const": true},
+    "effect_reconciliation_owner": {"const": "closeout"},
+    "source_acquisition_effect": {"const": false},
+    "project_effect": {"const": "none"},
+    "accepted": {"const": false},
+    "project_truth": {"const": false},
+    "notification_sent": {"const": false},
+    "project_written": {"const": false},
+    "routine_created": {"const": false},
+    "stop_reason": {"const": "human_review_gate"},
+    "next_authority": {"const": "Human Review"}
+  },
+  "$defs": {
+    "unobserved_effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason"],
+      "properties": {
+        "status": {"const": "unavailable"},
+        "reason": {"const": "not_observed_by_runner"}
+      }
+    }
+  }
+}

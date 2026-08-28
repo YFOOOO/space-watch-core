@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "space-watch-external-interaction-receipt-v0.2-candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "application_surface", "conversation_identity", "entrypoint", "actual_effects", "accepted", "project_truth"],
+  "properties": {
+    "schema_version": {"const": "space-watch-external-interaction-receipt-v0.2-candidate"},
+    "application_surface": {"const": "Grok Bot App"},
+    "conversation_identity": {"const": "Space Watch"},
+    "entrypoint": {"const": "direct_app"},
+    "actual_effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_read", "attachment", "cloud_root_created", "cloud_command_executed", "source_acquisition", "repository_write", "routine_created", "notification_sent", "project_written"],
+      "properties": {
+        "repository_read": {"type": "boolean"},
+        "attachment": {"type": "boolean"},
+        "cloud_root_created": {"type": "boolean"},
+        "cloud_command_executed": {"type": "boolean"},
+        "source_acquisition": {"type": "boolean"},
+        "repository_write": {"const": false},
+        "routine_created": {"const": false},
+        "notification_sent": {"const": false},
+        "project_written": {"const": false}
+      }
+    },
+    "accepted": {"const": false},
+    "project_truth": {"const": false}
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "space-watch-observation-candidate-bundle-v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "attempt_id", "mission_id", "baseline_file_sha256", "baseline_designation_file_sha256", "acquisition_path_verdict", "allowlist_coverage_verdict", "candidates", "accepted", "project_truth", "project_effect", "next_authority"],
+  "properties": {
+    "schema_version": {"const": "space-watch-observation-candidate-bundle-v0.2"},
+    "attempt_id": {"type": "string", "minLength": 1},
+    "mission_id": {"type": "string", "minLength": 1},
+    "baseline_file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "baseline_designation_file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "acquisition_path_verdict": {"const": "PASS_SYNTHETIC_ONLY"},
+    "allowlist_coverage_verdict": {"enum": ["complete", "partial", "none"]},
+    "accepted": {"const": false},
+    "project_truth": {"const": false},
+    "project_effect": {"const": "none"},
+    "next_authority": {"const": "Human Review"},
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate_id", "source_id", "claim_family", "availability", "projection_schema", "typed_content", "canonical_content_sha256", "previous_canonical_content_sha256", "comparison", "limitations", "accepted", "project_truth", "next_authority"],
+        "properties": {
+          "candidate_id": {"type": "string", "minLength": 1},
+          "source_id": {"type": "string", "minLength": 1},
+          "claim_family": {"type": "string", "minLength": 1},
+          "availability": {"enum": ["available", "partial", "unavailable"]},
+          "projection_schema": {"type": "string", "minLength": 1},
+          "typed_content": {"type": ["object", "null"]},
+          "canonical_content_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "previous_canonical_content_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "comparison": {"enum": ["new", "changed", "duplicate", "unavailable", "conflict"]},
+          "limitations": {"type": "array", "items": {"type": "string"}},
+          "accepted": {"const": false},
+          "project_truth": {"const": false},
+          "next_authority": {"const": "Human Review"}
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"availability": {"const": "available"}}, "required": ["availability"]},
+            "then": {"properties": {"typed_content": {"type": "object"}, "canonical_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}
+          },
+          {
+            "if": {"properties": {"comparison": {"const": "unavailable"}}, "required": ["comparison"]},
+            "then": {"properties": {"canonical_content_sha256": {"type": "null"}}}
+          }
+        ]
+      }
+    }
+  }
+}

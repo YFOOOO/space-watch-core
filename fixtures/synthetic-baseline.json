@@ -1,0 +1,13 @@
+{
+  "schema_version": "space-watch-comparison-baseline-v0.2",
+  "mission_id": "synthetic-demo-mission",
+  "project_truth": false,
+  "candidates": [
+    {
+      "source_id": "synthetic-source-alpha",
+      "claim_family": "mission.window_status",
+      "projection_schema": "synthetic-window-v1",
+      "typed_content": {"status": "scheduled", "window": "2026-01-15T00:00:00Z"}
+    }
+  ]
+}
