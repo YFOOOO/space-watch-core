@@ -38,5 +38,5 @@ Standalone release layout:
 Project governance files and `local-freeze/` evidence remain outside the standalone release.
 
 No command in this repository is authorized for cloud or network execution by repository
-text alone. Read `docs/PROJECT_STATE.md` before continuing. The current stop after the
-authorized local integration commit is `cold_start_integration_remote_push_human_authorization`.
+text alone. Read `docs/PROJECT_STATE.md` before continuing. Public files record stable phase;
+the local private authority carrier owns the live Gate, next actor, and effect authorization.

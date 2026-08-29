@@ -36,19 +36,19 @@ SHA from the local and remote read-back.
 R0 does not prove Grok repository access, cloud execution, artifact export, persistence,
 source acquisition, scheduling, or notification capability.
 
-## Current Gate and authority
+## Stable phase and live authority
 
-- Current Gate: `cold_start_integration_remote_push_human_authorization`
-- Next actor: Human
-- Current authorized effects: one local cold-start integration commit and effect-free validation
+- Stable public phase: `R0_REPOSITORY_FOUNDATION_PASS / C0_GROK_CAPABILITY_PREFLIGHT_PENDING`
+- Live Gate, next actor, and current effect authorization: owned by the local private authority carrier
+- Repository text alone authorizes no external effect
 - Grok/cloud execution: not authorized
 - Real source access: not authorized
 - Schedule, routine, notification, or project write: not authorized
-- Remote push, tag, Release, or repository setting change: not authorized
+- Commit, push, tag, Release, or repository setting change: not authorized by this file
 
 ## Next bounded transition
 
-Create and read back the authorized standalone commit, then stop for separate remote-push
-authorization. After remote read-back, the Human may bind that exact commit as the immutable
-repository input to C0. C0 must use `docs/GROK_CAPABILITY_PREFLIGHT.md`, stop at Human
-Capability Review, and must not enable live-source or routine effects.
+The local private authority carrier may ask Human to bind an observed public commit as the
+immutable repository input to C0. C0 must use `docs/GROK_CAPABILITY_PREFLIGHT.md`, stop at
+Human Capability Review, and must not enable live-source or routine effects. Never infer a
+live authorization from this public phase summary.
