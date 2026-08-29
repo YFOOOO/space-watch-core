@@ -1,6 +1,6 @@
 # Space Watch Core v0.2
 
-Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PENDING`
+Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_PENDING`
 
 This is a self-contained, public, generic, synthetic-only source repository. It is not an
 effect request approval, an operational-state carrier, or a runnable cloud deployment.

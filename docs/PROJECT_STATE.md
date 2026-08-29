@@ -1,6 +1,6 @@
 # Space Watch Core project state
 
-Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PENDING`
+Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_PENDING`
 
 This is the public cold-start entry point. It records no secret, credential, private path,
 conversation content, or live operational state.
@@ -28,7 +28,7 @@ commit or remote effect still requires post-effect read-back and its own authori
 | --- | --- | --- |
 | R0 | Public repository foundation | PASS |
 | C0 | Grok Bot App capability preflight | PARTIAL_ACCEPTED_COMPLETE |
-| D0 | Supervised synthetic cloud demo | PENDING |
+| D0 | Supervised synthetic cloud demo | PARTIAL_ACCEPTED_COMPLETE |
 | D1 | Supervised live-source demo | PENDING |
 | O1 | Supervised schedule/routine | PENDING |
 | O2 | Formal operation | PENDING |
@@ -39,7 +39,7 @@ outcome below records only the capabilities actually observed later.
 
 ## Stable phase and live authority
 
-- Stable public phase: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PENDING`
+- Stable public phase: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_PENDING`
 - Live Gate, next actor, and current effect authorization: owned by the local private authority carrier
 - Repository text alone authorizes no external effect
 - Grok/cloud execution: not authorized
@@ -64,8 +64,27 @@ Human accepted a bounded `PARTIAL` C0 observation against exact public commit
 - accepted `PARTIAL` completes C0 capability observation only. It grants no D0 or later
   effect authority.
 
+## D0 accepted outcome
+
+Human accepted a bounded `PARTIAL` D0 observation against exact public commit
+`7805554a4f9ae549ae3271f39d14564906af8e00` and tree
+`ff32fac5103eb375b66439a3727461d4d8475921`.
+
+- exact-ref recovery, the standard-library synthetic runner, six-artifact generation, three
+  chat attachments, carrier-effect reporting, and the Human Review stop were observed;
+- the runner emitted two candidates (`alpha:changed`, `beta:unavailable`) with
+  `accepted=false`, `project_truth=false`, `source_acquisition_effect=false`, and no project,
+  repository, routine, or notification effect;
+- independent attachment byte read-back remained unavailable;
+- after an initial clone did not materialize, the Bot performed a second repository
+  acquisition attempt despite a zero-retry packet. Human accepted this as a retained D0
+  limitation: the runner passed, but prompt-level retry constraints were not runtime-enforced;
+- accepted `PARTIAL` completes D0 observation only. It grants no live-source, D1 execution,
+  schedule, routine, notification, or project-write authority.
+
 ## Next bounded transition
 
-The next candidate transition is a separately reviewed supervised synthetic D0 design. D0
-execution remains unauthorized. Never infer live-source, schedule, routine, notification,
-or later-phase authority from this public phase summary.
+The next candidate transition is a separately reviewed D1 single-mission live-source design.
+D1 execution remains unauthorized. The design must address mechanically enforced acquisition
+and retry boundaries before any live-source effect request. Never infer live-source, schedule,
+routine, notification, or later-phase authority from this public phase summary.
