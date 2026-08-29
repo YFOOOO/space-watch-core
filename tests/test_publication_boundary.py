@@ -36,7 +36,7 @@ class PublicationBoundaryTests(unittest.TestCase):
         files = json.loads((ROOT / "release-files.json").read_text(encoding="utf-8"))["files"]
         url = re.compile(r"https?://(?!json-schema\.org/)")
         local = re.compile(r"/(Users|home)/")
-        exemptions = {"schemas/source-attempt-input.schema.json", "schemas/comparison-baseline.schema.json", "schemas/observation-candidate-bundle.schema.json", "schemas/execution-receipt.schema.json", "schemas/external-interaction-receipt.schema.json"}
+        exemptions = {"schemas/source-attempt-input.schema.json", "schemas/comparison-baseline.schema.json", "schemas/observation-candidate-bundle.schema.json", "schemas/execution-receipt.schema.json", "schemas/external-interaction-receipt.schema.json", "docs/GROK_CAPABILITY_PREFLIGHT.md"}
         for relative in files:
             text = (ROOT / relative).read_text(encoding="utf-8")
             if relative not in exemptions:
@@ -45,7 +45,7 @@ class PublicationBoundaryTests(unittest.TestCase):
 
     def test_standalone_readme_references_only_present_release_paths(self) -> None:
         files = set(json.loads((ROOT / "release-files.json").read_text(encoding="utf-8"))["files"])
-        for required in ("README.md", "CONTRACT.md", "DEPENDENCIES.md", "pyproject.toml", "release-files.json", "tools/build_release.py", "tools/run_shadow.py"):
+        for required in ("AGENTS.md", "README.md", "CONTRACT.md", "DEPENDENCIES.md", "docs/PROJECT_STATE.md", "docs/GROK_CAPABILITY_PREFLIGHT.md", "docs/DEVELOPMENT_RUNBOOK.md", "pyproject.toml", "release-files.json", "tools/build_release.py", "tools/run_shadow.py"):
             self.assertIn(required, files)
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertNotIn("WORK_BOUNDARY.json", readme)

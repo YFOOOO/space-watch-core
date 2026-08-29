@@ -1,6 +1,6 @@
 # Space Watch Core v0.2
 
-Status: `effect_free_candidate / human_review_required`
+Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_GROK_CAPABILITY_PREFLIGHT_PENDING`
 
 This directory contains a self-contained, generic, synthetic-only repository candidate and
 its local governance packet. It is not a nested Git repository, a public release, an effect
@@ -26,6 +26,7 @@ non-escaping path relative to this standalone repository root as well as to its 
 
 Standalone release layout:
 
+- `AGENTS.md` and `docs/`: cold-start state, bounded Grok preflight, and development runbook;
 - `src/space_watch_cloud/`: deterministic comparison core;
 - `schemas/`: six fail-closed public JSON Schemas;
 - `fixtures/`: synthetic input, baseline, and independent hash-bound designation;
@@ -36,5 +37,6 @@ Standalone release layout:
 
 Project governance files and `local-freeze/` evidence remain outside the standalone release.
 
-No command in this candidate is authorized for cloud or network execution. The current local
-stop is `local_repository_candidate_human_review`.
+No command in this repository is authorized for cloud or network execution by repository
+text alone. Read `docs/PROJECT_STATE.md` before continuing. The current stop after the
+authorized local integration commit is `cold_start_integration_remote_push_human_authorization`.
