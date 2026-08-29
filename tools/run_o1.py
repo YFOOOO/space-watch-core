@@ -16,7 +16,9 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from space_watch_cloud.d1 import run_d1  # noqa: E402
 from space_watch_cloud.http_adapter import ExactHttpAdapter  # noqa: E402
+from space_watch_cloud.model import require  # noqa: E402
 from space_watch_cloud.o1 import run_o1  # noqa: E402
+from space_watch_cloud.runner import load_json  # noqa: E402
 
 
 @contextlib.contextmanager
@@ -48,6 +50,16 @@ def git_basis() -> tuple[str, str]:
     return commit, tree
 
 
+def prepare_d1_root(packet_path: Path, producer_dir: Path) -> Path:
+    packet = load_json(packet_path)
+    d1_root = producer_dir / "d1"
+    d1_output = d1_root / "output"
+    require(Path(packet.get("disposable_root", "")) == d1_root, "O1 D1 disposable root must be inside the O1 output tree")
+    require(Path(packet.get("output_directory", "")) == d1_output, "O1 D1 output must be inside the O1 output tree")
+    d1_root.mkdir()
+    return d1_root
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", choices=("synthetic", "d1"), required=True)
@@ -77,6 +89,7 @@ def main() -> None:
             parser.error("--d1-packet is required in d1 mode")
 
         def producer(output: Path) -> Path:
+            prepare_d1_root(args.d1_packet, output)
             paths = run_d1(
                 root=ROOT,
                 packet_path=args.d1_packet,

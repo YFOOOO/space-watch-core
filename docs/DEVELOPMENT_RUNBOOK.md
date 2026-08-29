@@ -49,6 +49,10 @@ must use synthetic mode unless live access is explicitly authorized. Scheduling,
 workspace paths, D1 packet, and routine creation remain final packet and Human authorization
 concerns.
 
+For D1 mode, bind the D1 packet disposable root to `<o1-output>/producer/d1` and its output
+directory to `<o1-output>/producer/d1/output`. The CLI refuses paths outside that tree so the
+O1 maximum-output budget accounts for every D1 and O1 artifact.
+
 Before first use of a new product capability or carrier, review its current official docs and
 record the relevant persistence, execution, notification, approval, and retention boundaries.
 UI visibility alone is not runtime capability evidence.

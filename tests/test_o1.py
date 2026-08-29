@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import importlib.util
 import json
 import sys
 import unittest
@@ -111,6 +112,30 @@ class O1Tests(unittest.TestCase):
                         run_kind="synthetic_test", producer=producer, clock=lambda: next(ticks),
                     )
                 self.assertEqual(json.loads(state_path.read_text()), original)
+
+    def test_d1_output_must_be_contained_by_o1_output(self):
+        import tempfile
+        spec = importlib.util.spec_from_file_location("run_o1_tool", ROOT / "tools/run_o1.py")
+        module = importlib.util.module_from_spec(spec)
+        assert spec.loader is not None
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            producer = root / "o1" / "producer"
+            producer.mkdir(parents=True)
+            packet_path = root / "packet.json"
+            packet_path.write_text(json.dumps({
+                "disposable_root": str(producer / "d1"),
+                "output_directory": str(producer / "d1" / "output"),
+            }))
+            self.assertEqual(module.prepare_d1_root(packet_path, producer), producer / "d1")
+            outside = root / "outside"
+            packet_path.write_text(json.dumps({
+                "disposable_root": str(outside),
+                "output_directory": str(outside / "output"),
+            }))
+            with self.assertRaisesRegex(ContractError, "inside the O1 output tree"):
+                module.prepare_d1_root(packet_path, producer)
 
 
 if __name__ == "__main__":

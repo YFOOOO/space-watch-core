@@ -32,5 +32,8 @@ emit an O1 receipt, and stop at Human
 O1 Review. Repository bytes do not authorize scheduling, source access, notification, claim
 acceptance, or project write.
 
+In D1 mode, the D1 disposable root and its output must be nested below the O1 producer
+directory. This containment makes the O1 output budget cover both D1 and O1 artifacts.
+
 `release-files.json` is the exact publication allowlist. Files outside it are governance or
 local-freeze artifacts and are not part of the standalone release.
