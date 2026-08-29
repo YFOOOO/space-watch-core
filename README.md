@@ -1,6 +1,6 @@
 # Space Watch Core v0.2
 
-Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_LOCAL_IMPLEMENTATION_CANDIDATE`
+Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_PARTIAL_ACCEPTED`
 
 This is a self-contained public repository with the accepted synthetic comparison core and
 a locally validated D1 candidate for one supervised Flight 14 observation. It is not an

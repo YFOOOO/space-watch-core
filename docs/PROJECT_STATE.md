@@ -1,6 +1,6 @@
 # Space Watch Core project state
 
-Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_PENDING`
+Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_PARTIAL_ACCEPTED`
 
 This is the public cold-start entry point. It records no secret, credential, private path,
 conversation content, or live operational state.
@@ -29,7 +29,7 @@ commit or remote effect still requires post-effect read-back and its own authori
 | R0 | Public repository foundation | PASS |
 | C0 | Grok Bot App capability preflight | PARTIAL_ACCEPTED_COMPLETE |
 | D0 | Supervised synthetic cloud demo | PARTIAL_ACCEPTED_COMPLETE |
-| D1 | Supervised live-source demo | LOCAL_IMPLEMENTATION_CANDIDATE |
+| D1 | Supervised live-source demo | PARTIAL_ACCEPTED_COMPLETE |
 | O1 | Supervised schedule/routine | PENDING |
 | O2 | Formal operation | PENDING |
 
@@ -39,7 +39,7 @@ outcome below records only the capabilities actually observed later.
 
 ## Stable phase and live authority
 
-- Stable public phase: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_PENDING`
+- Stable public phase: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_PARTIAL_ACCEPTED`
 - Live Gate, next actor, and current effect authorization: owned by the local private authority carrier
 - Repository text alone authorizes no external effect
 - Grok/cloud execution: not authorized
@@ -82,20 +82,33 @@ Human accepted a bounded `PARTIAL` D0 observation against exact public commit
 - accepted `PARTIAL` completes D0 observation only. It grants no live-source, D1 execution,
   schedule, routine, notification, or project-write authority.
 
-## Next bounded transition
+## D1 accepted outcome
 
-Human accepted the first D1 design scope of exactly three Flight 14 carriers and authorized
-local implementation and validation. The current candidate adds repository-enforced exact
+Human accepted D1 as bounded `PARTIAL` and complete against exact public commit
+`83f46d55e88fa17c5b6b829af6d586fdbb6ce028` and tree
+`159986dc594fa13acc4fea53176f1e84440b8426`. The accepted implementation provides exact
 basis/hash/path/budget preflight and a single injected acquisition boundary that rejects
 redirects, login, search, alternate carriers, and retries. After the first Grok capability
 probe reported that its public-web tool could not bind to the injected interface, the local
 candidate added a repository-owned standard-library exact-URI HTTP adapter and D1 CLI. This
 is Evaluation evidence only; no real carrier was accessed during local validation.
 
-The first real D1 attempt later proved the exact-source path but exposed an LL2 comparison
+The first real D1 attempt proved the exact-source path but exposed an LL2 comparison
 projection mismatch: the baseline used flattened month/status fields while the adapter emitted
 nested live fields and included update metadata. The current local repair candidate normalizes
 both sides to one nested window/status projection and excludes `last_updated` from the fact
-digest. The prior `LL2 changed` result is not an accepted material delta.
-D1 execution, commit, push, live-source access, Grok interaction, schedule, routine,
-notification, and project write remain unauthorized.
+digest. The prior `LL2 changed` result is not an accepted material delta. D1R1 then observed
+LL2 as `available/duplicate`, FCC as `unavailable/HTTP 403`, and X as
+`available/duplicate`, with three attempts and no reported retry, redirect, login, search,
+alternate carrier, or Grok public-web fallback. No candidate was accepted and no project,
+repository, routine, or notification effect occurred. Independent attachment byte read-back
+remained unavailable.
+
+Accepted `PARTIAL` completes D1 mechanical live-source observation only. It grants no future
+live-source execution, schedule, routine, notification, project write, claim acceptance, O1,
+or O2 authority.
+
+## Next bounded transition
+
+The next action is Human evaluation and retrospective review. O1 remains pending and requires
+a separately designed and authorized operational contract; D1 completion does not imply it.
