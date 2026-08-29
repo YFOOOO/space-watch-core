@@ -1,10 +1,9 @@
 # Space Watch Core v0.2
 
-Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_GROK_CAPABILITY_PREFLIGHT_PENDING`
+Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PENDING`
 
-This directory contains a self-contained, generic, synthetic-only repository candidate and
-its local governance packet. It is not a nested Git repository, a public release, an effect
-request approval, or a runnable cloud deployment.
+This is a self-contained, public, generic, synthetic-only source repository. It is not an
+effect request approval, an operational-state carrier, or a runnable cloud deployment.
 
 The release allowlist contains an offline comparison runner, schemas, synthetic fixtures,
 tests, and a deterministic build tool. Historical observations, receipts, packages, source

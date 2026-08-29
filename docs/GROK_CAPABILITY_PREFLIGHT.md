@@ -1,28 +1,38 @@
-# Grok Bot App capability preflight candidate
+# Grok Bot App capability preflight and accepted disposition
 
-Status: `candidate / no Grok or cloud effect authority`
+Status: `C0_PARTIAL_ACCEPTED_COMPLETE / no D0 or later effect authority`
 
 ## Purpose
 
-Observe whether the Grok Bot App at grok.com can use this public repository as an exact,
-read-only source and perform a disposable synthetic-only build and test run. This preflight
-does not acquire live sources, enable a schedule, create project truth, or accept outputs.
+Observe whether the Grok Bot App can use this public repository as an exact, read-only source
+and perform a disposable synthetic-only build and test run. This preflight does not acquire
+live sources, enable a schedule, create project truth, or accept outputs.
 
 ## Frozen public input
 
 - Repository URL: `https://github.com/YFOOOO/space-watch-core`
-- Required ref: `unavailable_until_cold_start_integration_commit_read_back`
+- Observed C0 subject ref: `1e4dddbb928d290b458feeee7c5f6399428a76ec`
 - Required ref policy: exact commit SHA; floating `main` is insufficient
 - Expected repository visibility: public
 - Expected runtime: CPython 3.11 or newer
 - Runtime package dependencies: none
 - Test dependency: `jsonschema>=4,<5`, only if already available or separately approved
 
-The R0 commit is provenance, not the C0 execution ref. The Human must insert the observed
-post-integration commit SHA into the dispatched request without editing this file to claim a
-self-referential binding.
+The observed C0 subject ref above is immutable execution evidence. A later phase must bind
+its own already observed exact ref; floating `main` remains insufficient.
 
-## Requested observations
+## Observed C0 disposition
+
+Human accepted C0 as `PARTIAL` and complete for capability observation. Anonymous exact-ref
+access, persistent workspace observation, the standard-library deterministic release build,
+the synthetic-only runner, and artifact attachment passed. The Grok carrier could not bind
+creation of an isolated environment or installation of the test-only `jsonschema`
+dependency, so the complete cloud unittest suite remained unavailable.
+
+This disposition is not a repository failure and does not authorize dependency fallback,
+D0, live sources, schedules, routines, notifications, or project effects.
+
+## Frozen requested observations
 
 1. Read the public repository without credentials and prove the exact checked-out commit.
 2. Create or identify one disposable cloud workspace.
