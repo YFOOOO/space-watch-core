@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "space-watch-o1-state-v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository_commit", "repository_tree", "last_run_id", "last_candidate_bundle_sha256", "last_reported_changed_sha256", "consecutive_capability_failure_count", "invocation_count"],
+  "properties": {
+    "schema_version": {"const": "space-watch-o1-pilot-state-v0.1"},
+    "repository_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "repository_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "last_run_id": {"type": ["string", "null"]},
+    "last_candidate_bundle_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "last_reported_changed_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "consecutive_capability_failure_count": {"type": "integer", "minimum": 0},
+    "invocation_count": {"type": "integer", "minimum": 0, "maximum": 3}
+  }
+}

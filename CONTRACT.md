@@ -24,5 +24,13 @@ future closeout owns reconciliation.
 The baseline cannot designate itself: the runner verifies the baseline file SHA-256 against
 the separately supplied designation and fails closed on mismatch.
 
+The O1 CLI owns one complete pilot invocation. Synthetic mode consumes only the frozen O1
+fixture; D1 mode calls the repository-owned D1 orchestrator and HTTP adapter. Both modes bind
+an exact repository ref and refuse a dirty working tree, validate and atomically replace
+non-authoritative O1 state, enforce the three-run pilot limit plus runtime/output budgets,
+emit an O1 receipt, and stop at Human
+O1 Review. Repository bytes do not authorize scheduling, source access, notification, claim
+acceptance, or project write.
+
 `release-files.json` is the exact publication allowlist. Files outside it are governance or
 local-freeze artifacts and are not part of the standalone release.

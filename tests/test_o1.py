@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -9,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from space_watch_cloud.model import ContractError  # noqa: E402
-from space_watch_cloud.o1 import evaluate_run, initial_state  # noqa: E402
+from space_watch_cloud.o1 import evaluate_run, initial_state, run_o1  # noqa: E402
 
 COMMIT = "a" * 40
 TREE = "b" * 40
@@ -60,6 +61,56 @@ class O1Tests(unittest.TestCase):
             _, state = evaluate_run(state=state, run_id=run_id, bundle=bundle(["duplicate"] * 3), repository_commit=COMMIT, repository_tree=TREE)
         with self.assertRaisesRegex(ContractError, "budget exhausted"):
             evaluate_run(state=state, run_id="run-4", bundle=bundle(["duplicate"] * 3), repository_commit=COMMIT, repository_tree=TREE)
+
+    def test_full_synthetic_orchestration_writes_receipt_and_advances_state(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            state_path = root / "state.json"
+            state_path.write_text(json.dumps(initial_state(COMMIT, TREE), sort_keys=True, indent=2) + "\n")
+
+            def producer(output):
+                target = output / "observation-candidates.json"
+                target.write_text(json.dumps(bundle(["duplicate", "unavailable", "duplicate"])))
+                return target
+
+            ticks = iter((0.0, 0.5, 0.75))
+            paths = run_o1(
+                state_path=state_path, output_dir=root / "run", run_id="scheduled-1",
+                scheduled_occurrence="2026-08-29T19:00:00+08:00", executed_at="2026-08-29T19:01:00+08:00",
+                repository_commit=COMMIT, repository_tree=TREE, runtime_budget_seconds=60,
+                maximum_output_bytes=100000, run_kind="synthetic_test", producer=producer,
+                clock=lambda: next(ticks),
+            )
+            receipt = json.loads(paths["receipt"].read_text())
+            state = json.loads(state_path.read_text())
+            self.assertEqual(receipt["verdict"], "COVERAGE_LIMITATION")
+            self.assertFalse(receipt["source_acquisition"])
+            self.assertFalse(receipt["network_access"])
+            self.assertEqual(state["invocation_count"], 1)
+            self.assertEqual(state["last_run_id"], "scheduled-1")
+
+    def test_runtime_or_output_budget_failure_does_not_advance_state(self):
+        import tempfile
+        for failure in ("runtime", "output"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as name:
+                root = Path(name); state_path = root / "state.json"
+                original = initial_state(COMMIT, TREE)
+                state_path.write_text(json.dumps(original) + "\n")
+                def producer(output):
+                    target = output / "observation-candidates.json"
+                    target.write_text(json.dumps(bundle(["duplicate"] * 3)))
+                    return target
+                ticks = iter((0.0, 2.0)) if failure == "runtime" else iter((0.0, 0.1, 0.2))
+                with self.assertRaisesRegex(ContractError, "runtime budget|output budget"):
+                    run_o1(
+                        state_path=state_path, output_dir=root / "run", run_id="scheduled-1",
+                        scheduled_occurrence="2026-08-29T19:00:00+08:00", executed_at="2026-08-29T19:01:00+08:00",
+                        repository_commit=COMMIT, repository_tree=TREE, runtime_budget_seconds=1,
+                        maximum_output_bytes=1 if failure == "output" else 100000,
+                        run_kind="synthetic_test", producer=producer, clock=lambda: next(ticks),
+                    )
+                self.assertEqual(json.loads(state_path.read_text()), original)
 
 
 if __name__ == "__main__":

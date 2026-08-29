@@ -14,6 +14,8 @@
     "docs/PROJECT_STATE.md",
     "fixtures/d1-flight14-baseline-designation.json",
     "fixtures/d1-flight14-baseline.json",
+    "fixtures/o1-initial-state.json",
+    "fixtures/o1-synthetic-d1-bundle.json",
     "fixtures/synthetic-baseline-designation.json",
     "fixtures/synthetic-baseline.json",
     "fixtures/synthetic-source-input.json",
@@ -26,6 +28,8 @@
     "schemas/d1-source-policy.schema.json",
     "schemas/execution-receipt.schema.json",
     "schemas/external-interaction-receipt.schema.json",
+    "schemas/o1-execution-receipt.schema.json",
+    "schemas/o1-state.schema.json",
     "schemas/observation-candidate-bundle.schema.json",
     "schemas/source-attempt-input.schema.json",
     "src/space_watch_cloud/__init__.py",
@@ -43,6 +47,7 @@
     "tests/test_schemas.py",
     "tools/build_release.py",
     "tools/run_d1.py",
+    "tools/run_o1.py",
     "tools/run_shadow.py"
   ]
 }

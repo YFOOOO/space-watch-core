@@ -40,11 +40,18 @@ A caller that bypasses this entrypoint cannot claim a conforming D1 receipt.
 
 ## O1 local validation
 
-`src/space_watch_cloud/o1.py` owns the effect-free O1 pilot state transition and repeat
-suppression rules. Its tests consume synthetic D1-shaped bundles only and must not create a
-routine, access a real source, or write persistent operational state. Scheduling, atomic
-state persistence, exact first occurrence, runtime/output budgets, and routine creation
-remain final packet and Human authorization concerns.
+`src/space_watch_cloud/o1.py` owns O1 state transition, repeat suppression, atomic state
+replacement, pilot limit, budgets, and receipt generation. `tools/run_o1.py --mode synthetic`
+uses only the frozen O1 fixture; `--mode d1` calls the repository-owned D1 path and therefore
+requires a separate live-source effect packet. The CLI refuses a dirty working tree so its
+receipt commit/tree identifies the code actually executed. Local tests and product Test runs
+must use synthetic mode unless live access is explicitly authorized. Scheduling, exact occurrence,
+workspace paths, D1 packet, and routine creation remain final packet and Human authorization
+concerns.
+
+Before first use of a new product capability or carrier, review its current official docs and
+record the relevant persistence, execution, notification, approval, and retention boundaries.
+UI visibility alone is not runtime capability evidence.
 
 ## Release contract
 

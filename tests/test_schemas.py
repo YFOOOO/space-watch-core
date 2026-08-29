@@ -42,7 +42,7 @@ class SchemaTests(unittest.TestCase):
             self.assertFalse(document["additionalProperties"], path.name)
             ids.append(document["$id"])
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), 9)
+        self.assertEqual(len(ids), 11)
 
     def test_synthetic_fixtures_validate(self) -> None:
         pairs = [
@@ -51,10 +51,28 @@ class SchemaTests(unittest.TestCase):
             ("comparison-baseline-designation.schema.json", "synthetic-baseline-designation.json"),
             ("d1-mission-profile.schema.json", "../config/d1-flight14-mission-profile.json"),
             ("d1-source-policy.schema.json", "../config/d1-flight14-source-policy.json"),
+            ("o1-state.schema.json", "../fixtures/o1-initial-state.json"),
         ]
         for schema_name, fixture_name in pairs:
             fixture_path = ROOT / "fixtures" / fixture_name
             jsonschema.Draft202012Validator(load(ROOT / "schemas" / schema_name), format_checker=jsonschema.FormatChecker()).validate(load(fixture_path.resolve()))
+
+    def test_o1_receipt_validates(self) -> None:
+        from space_watch_cloud.o1 import run_o1
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); state_path = root / "state.json"
+            state_path.write_text((ROOT / "fixtures/o1-initial-state.json").read_text())
+            def producer(output):
+                target = output / "observation-candidates.json"
+                target.write_text((ROOT / "fixtures/o1-synthetic-d1-bundle.json").read_text())
+                return target
+            ticks = iter((0.0, 0.1, 0.2))
+            paths = run_o1(state_path=state_path, output_dir=root / "run", run_id="schema-o1",
+                scheduled_occurrence="2026-08-29T19:00:00+08:00", executed_at="2026-08-29T19:01:00+08:00",
+                repository_commit="a" * 40, repository_tree="b" * 40, runtime_budget_seconds=60,
+                maximum_output_bytes=100000, run_kind="synthetic_test", producer=producer,
+                clock=lambda: next(ticks))
+            jsonschema.Draft202012Validator(load(ROOT / "schemas/o1-execution-receipt.schema.json"), format_checker=jsonschema.FormatChecker()).validate(load(paths["receipt"]))
 
     def test_generated_artifacts_validate(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

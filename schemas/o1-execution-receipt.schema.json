@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "space-watch-o1-execution-receipt-v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "run_kind", "scheduled_occurrence", "executed_at", "repository_commit", "repository_tree", "runtime_budget_seconds", "maximum_output_bytes", "elapsed_seconds", "candidate_bundle_path", "candidate_bundle_sha256", "state_before_sha256", "state_after_sha256", "invocation_count_before", "invocation_count_after", "verdict", "source_acquisition", "network_access", "workspace_write", "notification_sent", "accepted", "project_truth", "next_authority"],
+  "properties": {
+    "schema_version": {"const": "space-watch-o1-execution-receipt-v0.1"},
+    "run_id": {"type": "string", "minLength": 1},
+    "run_kind": {"enum": ["synthetic_test", "scheduled_live"]},
+    "scheduled_occurrence": {"type": "string", "format": "date-time"},
+    "executed_at": {"type": "string", "format": "date-time"},
+    "repository_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "repository_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "runtime_budget_seconds": {"type": "integer", "minimum": 1},
+    "maximum_output_bytes": {"type": "integer", "minimum": 1},
+    "elapsed_seconds": {"type": "number", "minimum": 0},
+    "candidate_bundle_path": {"const": "producer/observation-candidates.json"},
+    "candidate_bundle_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "state_before_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "state_after_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "invocation_count_before": {"type": "integer", "minimum": 0, "maximum": 2},
+    "invocation_count_after": {"type": "integer", "minimum": 1, "maximum": 3},
+    "verdict": {"enum": ["NO_MATERIAL_DELTA", "COVERAGE_LIMITATION", "HUMAN_REVIEW_CANDIDATE", "REPEAT_SUPPRESSED"]},
+    "source_acquisition": {"type": "boolean"},
+    "network_access": {"type": "boolean"},
+    "workspace_write": {"const": true},
+    "notification_sent": {"const": false},
+    "accepted": {"const": false},
+    "project_truth": {"const": false},
+    "next_authority": {"const": "Human O1 Review"}
+  }
+}

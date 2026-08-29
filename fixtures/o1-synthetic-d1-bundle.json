@@ -1,0 +1,54 @@
+{
+  "schema_version": "space-watch-d1-observation-candidate-bundle-v0.1",
+  "packet_id": "o1-synthetic-test-packet",
+  "mission_id": "starship-ift14",
+  "baseline_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "candidates": [
+    {
+      "candidate_id": "starship-ift14:launch-library-2:mission-window",
+      "source_id": "launch-library-2",
+      "claim_family": "mission-window",
+      "availability": "available",
+      "projection_schema": "ll2-flight14-v0.1",
+      "typed_content": {"status": "Go"},
+      "comparison": "duplicate",
+      "authority_limit": "synthetic fixture only",
+      "limitations": ["no network access"],
+      "accepted": false,
+      "project_truth": false,
+      "next_authority": "Human Observation Review"
+    },
+    {
+      "candidate_id": "starship-ift14:fcc:regulatory",
+      "source_id": "fcc",
+      "claim_family": "regulatory",
+      "availability": "unavailable",
+      "projection_schema": "fcc-flight14-v0.1",
+      "typed_content": null,
+      "comparison": "unavailable",
+      "authority_limit": "synthetic fixture only",
+      "limitations": ["synthetic unavailable"],
+      "accepted": false,
+      "project_truth": false,
+      "next_authority": "Human Observation Review"
+    },
+    {
+      "candidate_id": "starship-ift14:spacex-x:mission-status",
+      "source_id": "spacex-x",
+      "claim_family": "mission-status",
+      "availability": "available",
+      "projection_schema": "spacex-x-flight14-v0.1",
+      "typed_content": {"mission": "Flight 14"},
+      "comparison": "duplicate",
+      "authority_limit": "synthetic fixture only",
+      "limitations": ["no network access"],
+      "accepted": false,
+      "project_truth": false,
+      "next_authority": "Human Observation Review"
+    }
+  ],
+  "accepted": false,
+  "project_truth": false,
+  "project_effect": "none",
+  "next_authority": "Human Observation Review"
+}

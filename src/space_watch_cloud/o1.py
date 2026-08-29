@@ -1,11 +1,15 @@
-"""Effect-free O1 pilot state and repeat-suppression evaluation."""
+"""O1 pilot orchestration, state transition, and repeat suppression."""
 
 from __future__ import annotations
 
-from typing import Any
+import os
+import time
+from pathlib import Path
+from typing import Any, Callable
 
-from .canonical import canonical_digest
-from .model import require, require_exact_keys, require_nonempty_string
+from .canonical import canonical_digest, file_digest
+from .model import require, require_exact_keys, require_nonempty_string, validate_rfc3339_datetime
+from .runner import load_json, write_json
 
 HEX64 = set("0123456789abcdef")
 STATE_KEYS = {
@@ -13,6 +17,7 @@ STATE_KEYS = {
     "last_candidate_bundle_sha256", "last_reported_changed_sha256",
     "consecutive_capability_failure_count", "invocation_count",
 }
+BundleProducer = Callable[[Path], Path]
 
 
 def _oid(value: Any, field: str) -> str:
@@ -33,10 +38,22 @@ def initial_state(repository_commit: str, repository_tree: str) -> dict[str, Any
     }
 
 
-def evaluate_run(*, state: dict[str, Any], run_id: str, bundle: dict[str, Any], repository_commit: str, repository_tree: str) -> tuple[str, dict[str, Any]]:
-    """Validate one completed D1 bundle and derive the next non-authoritative O1 state."""
+def validate_state(state: dict[str, Any]) -> None:
     require_exact_keys(state, STATE_KEYS, "O1 state")
     require(state["schema_version"] == "space-watch-o1-pilot-state-v0.1", "unsupported O1 state")
+    _oid(state["repository_commit"], "repository_commit")
+    _oid(state["repository_tree"], "repository_tree")
+    require(state["last_run_id"] is None or isinstance(state["last_run_id"], str), "invalid O1 last_run_id")
+    for field in ("last_candidate_bundle_sha256", "last_reported_changed_sha256"):
+        value = state[field]
+        require(value is None or (isinstance(value, str) and len(value) == 64 and set(value) <= HEX64), f"invalid O1 {field}")
+    require(isinstance(state["consecutive_capability_failure_count"], int) and state["consecutive_capability_failure_count"] >= 0, "invalid O1 failure count")
+    require(isinstance(state["invocation_count"], int) and 0 <= state["invocation_count"] <= 3, "invalid O1 invocation count")
+
+
+def evaluate_run(*, state: dict[str, Any], run_id: str, bundle: dict[str, Any], repository_commit: str, repository_tree: str) -> tuple[str, dict[str, Any]]:
+    """Validate one completed D1 bundle and derive the next non-authoritative O1 state."""
+    validate_state(state)
     require(state["repository_commit"] == _oid(repository_commit, "repository_commit") and state["repository_tree"] == _oid(repository_tree, "repository_tree"), "O1 exact repository basis mismatch")
     require_nonempty_string(run_id, "run_id")
     require(run_id != state["last_run_id"], "O1 scheduled run ID already completed")
@@ -71,3 +88,95 @@ def evaluate_run(*, state: dict[str, Any], run_id: str, bundle: dict[str, Any], 
         "invocation_count": state["invocation_count"] + 1,
     })
     return verdict, next_state
+
+
+def _atomic_write_json(path: Path, value: dict[str, Any]) -> None:
+    require(path.parent.exists() and path.parent.is_dir(), "O1 state parent must exist")
+    temporary = path.with_name(f".{path.name}.tmp")
+    require(not temporary.exists(), "O1 state temporary path already exists")
+    write_json(temporary, value)
+    os.replace(temporary, path)
+
+
+def run_o1(
+    *,
+    state_path: Path,
+    output_dir: Path,
+    run_id: str,
+    scheduled_occurrence: str,
+    executed_at: str,
+    repository_commit: str,
+    repository_tree: str,
+    runtime_budget_seconds: int,
+    maximum_output_bytes: int,
+    run_kind: str,
+    producer: BundleProducer,
+    clock: Callable[[], float] = time.monotonic,
+) -> dict[str, Path]:
+    """Run one producer, evaluate its bundle, persist a receipt, then atomically advance state."""
+    require(run_kind in {"synthetic_test", "scheduled_live"}, "invalid O1 run kind")
+    require(isinstance(runtime_budget_seconds, int) and runtime_budget_seconds > 0, "O1 runtime budget must be positive")
+    require(isinstance(maximum_output_bytes, int) and maximum_output_bytes > 0, "O1 output budget must be positive")
+    validate_rfc3339_datetime(scheduled_occurrence, "scheduled_occurrence")
+    validate_rfc3339_datetime(executed_at, "executed_at")
+    require(not output_dir.exists(), "O1 output directory must not already exist")
+    state = load_json(state_path)
+    validate_state(state)
+    require(state["repository_commit"] == repository_commit and state["repository_tree"] == repository_tree, "O1 exact repository basis mismatch")
+    require(run_id != state["last_run_id"], "O1 scheduled run ID already completed")
+    require(state["invocation_count"] < 3, "O1 pilot invocation budget exhausted")
+
+    started = clock()
+    output_dir.mkdir()
+    producer_dir = output_dir / "producer"
+    producer_dir.mkdir()
+    bundle_path = producer(producer_dir)
+    require(bundle_path.is_file() and bundle_path.parent == producer_dir, "O1 producer bundle path mismatch")
+    require(clock() - started <= runtime_budget_seconds, "O1 total runtime budget exhausted")
+    bundle = load_json(bundle_path)
+    verdict, next_state = evaluate_run(
+        state=state,
+        run_id=run_id,
+        bundle=bundle,
+        repository_commit=repository_commit,
+        repository_tree=repository_tree,
+    )
+    elapsed = clock() - started
+    require(elapsed <= runtime_budget_seconds, "O1 total runtime budget exhausted")
+
+    state_before_sha256 = file_digest(state_path)
+    state_after_path = output_dir / "o1-state-after.json"
+    write_json(state_after_path, next_state)
+    state_after_sha256 = file_digest(state_after_path)
+    receipt = {
+        "schema_version": "space-watch-o1-execution-receipt-v0.1",
+        "run_id": run_id,
+        "run_kind": run_kind,
+        "scheduled_occurrence": scheduled_occurrence,
+        "executed_at": executed_at,
+        "repository_commit": repository_commit,
+        "repository_tree": repository_tree,
+        "runtime_budget_seconds": runtime_budget_seconds,
+        "maximum_output_bytes": maximum_output_bytes,
+        "elapsed_seconds": elapsed,
+        "candidate_bundle_path": "producer/observation-candidates.json",
+        "candidate_bundle_sha256": file_digest(bundle_path),
+        "state_before_sha256": state_before_sha256,
+        "state_after_sha256": state_after_sha256,
+        "invocation_count_before": state["invocation_count"],
+        "invocation_count_after": next_state["invocation_count"],
+        "verdict": verdict,
+        "source_acquisition": run_kind == "scheduled_live",
+        "network_access": run_kind == "scheduled_live",
+        "workspace_write": True,
+        "notification_sent": False,
+        "accepted": False,
+        "project_truth": False,
+        "next_authority": "Human O1 Review",
+    }
+    receipt_path = output_dir / "o1-execution-receipt.json"
+    write_json(receipt_path, receipt)
+    output_bytes = sum(path.stat().st_size for path in output_dir.rglob("*") if path.is_file())
+    require(output_bytes <= maximum_output_bytes, "O1 output budget exhausted")
+    _atomic_write_json(state_path, next_state)
+    return {"output": output_dir, "bundle": bundle_path, "receipt": receipt_path, "state_after": state_after_path, "state": state_path}

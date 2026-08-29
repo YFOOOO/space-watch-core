@@ -1,0 +1,10 @@
+{
+  "schema_version": "space-watch-o1-pilot-state-v0.1",
+  "repository_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "repository_tree": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "last_run_id": null,
+  "last_candidate_bundle_sha256": null,
+  "last_reported_changed_sha256": null,
+  "consecutive_capability_failure_count": 0,
+  "invocation_count": 0
+}
