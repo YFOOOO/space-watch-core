@@ -38,6 +38,14 @@ URLs. The exact post-commit ref, packet hashes, disposable root, and budgets are
 a later Human-authorized dispatch. Run only `tools/run_d1.py` for a conforming live attempt.
 A caller that bypasses this entrypoint cannot claim a conforming D1 receipt.
 
+## O1 local validation
+
+`src/space_watch_cloud/o1.py` owns the effect-free O1 pilot state transition and repeat
+suppression rules. Its tests consume synthetic D1-shaped bundles only and must not create a
+routine, access a real source, or write persistent operational state. Scheduling, atomic
+state persistence, exact first occurrence, runtime/output budgets, and routine creation
+remain final packet and Human authorization concerns.
+
 ## Release contract
 
 `release-files.json` is the only source inclusion authority. A release build adds only
