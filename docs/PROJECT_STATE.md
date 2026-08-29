@@ -91,5 +91,11 @@ redirects, login, search, alternate carriers, and retries. After the first Grok 
 probe reported that its public-web tool could not bind to the injected interface, the local
 candidate added a repository-owned standard-library exact-URI HTTP adapter and D1 CLI. This
 is Evaluation evidence only; no real carrier was accessed during local validation.
+
+The first real D1 attempt later proved the exact-source path but exposed an LL2 comparison
+projection mismatch: the baseline used flattened month/status fields while the adapter emitted
+nested live fields and included update metadata. The current local repair candidate normalizes
+both sides to one nested window/status projection and excludes `last_updated` from the fact
+digest. The prior `LL2 changed` result is not an accepted material delta.
 D1 execution, commit, push, live-source access, Grok interaction, schedule, routine,
 notification, and project write remain unauthorized.

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import io
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -10,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from space_watch_cloud.http_adapter import ExactHttpAdapter, MAX_RESPONSE_BYTES  # noqa: E402
+from space_watch_cloud.canonical import canonical_digest  # noqa: E402
 
 
 class Response:
@@ -31,10 +33,26 @@ class Opener:
 class HttpAdapterTests(unittest.TestCase):
     def test_ll2_json_projects_window_and_status_with_one_get(self) -> None:
         uri = "https://example.test/ll2"
-        opener = Opener(Response(uri, b'{"window_start":"2026-09-01T00:00:00Z","status":{"id":2,"name":"To Be Determined"},"last_updated":"2026-08-29T00:00:00Z"}'))
+        opener = Opener(Response(uri, b'{"window_start":"2026-09-01T00:00:00Z","net_precision":{"name":"Month"},"status":{"id":2,"name":"To Be Determined"},"last_updated":"2026-08-29T00:00:00Z"}'))
         result = ExactHttpAdapter(opener)("f14-ll2-current-observation", uri, 60)
-        self.assertEqual(result["status"], "available"); self.assertEqual(result["typed_content"]["status"]["id"], 2)
+        self.assertEqual(result["status"], "available"); self.assertEqual(result["typed_content"]["window"], {"value": "2026-09-TBD", "precision": "month"})
         self.assertEqual(opener.calls, [(uri, 60, "GET")])
+
+    def test_ll2_live_projection_is_canonical_with_baseline_and_ignores_last_updated(self) -> None:
+        uri = "https://example.test/ll2"
+        body = b'{"window_start":"2026-09-15T00:00:00Z","net_precision":{"name":"Month"},"status":{"id":2,"name":"To Be Determined"},"last_updated":"2099-01-01T00:00:00Z"}'
+        result = ExactHttpAdapter(Opener(Response(uri, body)))("f14-ll2-current-observation", uri, 60)
+        baseline = json.loads((ROOT / "fixtures/d1-flight14-baseline.json").read_text())
+        expected = baseline["candidates"][0]["typed_content"]
+        self.assertEqual(result["typed_content"], expected)
+        self.assertEqual(canonical_digest(result["typed_content"]), canonical_digest(expected))
+
+    def test_ll2_material_window_change_changes_canonical_projection(self) -> None:
+        uri = "https://example.test/ll2"
+        body = b'{"window_start":"2026-10-01T00:00:00Z","net_precision":{"name":"Month"},"status":{"id":2,"name":"To Be Determined"}}'
+        result = ExactHttpAdapter(Opener(Response(uri, body)))("f14-ll2-current-observation", uri, 60)
+        baseline = json.loads((ROOT / "fixtures/d1-flight14-baseline.json").read_text())["candidates"][0]["typed_content"]
+        self.assertNotEqual(canonical_digest(result["typed_content"]), canonical_digest(baseline))
 
     def test_fcc_projection_does_not_infer_landing_or_catch(self) -> None:
         uri = "https://example.test/fcc"

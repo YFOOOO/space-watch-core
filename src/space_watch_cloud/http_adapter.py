@@ -38,9 +38,20 @@ def _project(source_id: str, body: bytes) -> tuple[str, dict[str, Any] | None, l
             return "unavailable", None, ["exact LL2 carrier did not return valid JSON"]
         status = value.get("status") if isinstance(value, dict) else None
         window = value.get("window_start") if isinstance(value, dict) else None
-        if not isinstance(status, dict) or not isinstance(window, str):
-            return "partial", {"window_start": window, "status": status if isinstance(status, dict) else None}, ["LL2 response lacked one or more typed window/status fields", "aggregate observation only; no claim promotion"]
-        return "available", {"window_start": window, "status": {"id": status.get("id"), "name": status.get("name")}, "last_updated": value.get("last_updated")}, ["aggregate observation only; not an operator or regulator window"]
+        precision = value.get("net_precision") if isinstance(value, dict) else None
+        if not isinstance(status, dict) or not isinstance(window, str) or not isinstance(precision, dict):
+            return "unavailable", None, ["LL2 response lacked required window_start, status, or net_precision fields", "aggregate observation only; no claim promotion"]
+        precision_name = precision.get("name")
+        if not isinstance(precision_name, str):
+            return "unavailable", None, ["LL2 net_precision.name was unavailable", "aggregate observation only; no claim promotion"]
+        normalized_precision = precision_name.strip().lower()
+        if normalized_precision == "month" and re.fullmatch(r"\d{4}-\d{2}-.+", window):
+            window_value = window[:7] + "-TBD"
+            precision_value = "month"
+        else:
+            window_value = window
+            precision_value = normalized_precision
+        return "available", {"window": {"value": window_value, "precision": precision_value}, "status": {"id": status.get("id"), "name": status.get("name")}}, ["aggregate observation only; not an operator or regulator window", "last_updated is observation metadata and excluded from the comparison digest"]
     text = _text(body)
     lowered = text.lower()
     if source_id == "f14-fcc-1597-ex-st-2026":
