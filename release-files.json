@@ -31,13 +31,16 @@
     "src/space_watch_cloud/__init__.py",
     "src/space_watch_cloud/canonical.py",
     "src/space_watch_cloud/d1.py",
+    "src/space_watch_cloud/http_adapter.py",
     "src/space_watch_cloud/model.py",
     "src/space_watch_cloud/runner.py",
     "tests/test_d1.py",
+    "tests/test_http_adapter.py",
     "tests/test_publication_boundary.py",
     "tests/test_runner.py",
     "tests/test_schemas.py",
     "tools/build_release.py",
+    "tools/run_d1.py",
     "tools/run_shadow.py"
   ]
 }

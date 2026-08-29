@@ -7,9 +7,10 @@
   frozen offline build command and may require a separately provisioned environment.
 
 The frozen test and build commands assume required tools are already present. They do not
-authorize dependency installation, package-index access, or any network request. A future
-cloud preflight must bind the exact runtime image, dependency-install command or explicit
-no-install condition, and observed versions separately.
+authorize dependency installation, package-index access, or any network request. The D1 CLI
+uses only `urllib` from the standard library, but an exact Human effect packet is still
+required before its three network requests. A cloud preflight must bind the exact runtime
+image and explicit no-install condition separately.
 
 The deterministic ZIP claim is bounded to two builds from identical bytes in the observed
 local runtime. Cross-Python or cross-zlib byte identity is unavailable until independently

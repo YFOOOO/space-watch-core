@@ -29,11 +29,11 @@ Standalone release layout:
 
 - `AGENTS.md` and `docs/`: cold-start state, bounded Grok preflight, and development runbook;
 - `config/`: frozen D1 mission profile and exact three-source policy;
-- `src/space_watch_cloud/`: deterministic comparison core and injected D1 acquisition boundary;
+- `src/space_watch_cloud/`: deterministic comparison core and exact-URI D1 HTTP adapter;
 - `schemas/`: synthetic and D1 fail-closed public JSON Schemas;
 - `fixtures/`: synthetic fixtures and the non-authoritative D1 comparison export;
 - `tests/`: runner, schema, publication-boundary, and reproducibility checks;
-- `tools/`: offline runner and deterministic release builder;
+- `tools/`: offline runner, D1 exact-source CLI, and deterministic release builder;
 - `release-files.json`: exact standalone allowlist;
 - `CONTRACT.md`, `DEPENDENCIES.md`, `LICENSE`, `pyproject.toml`, and `.gitignore`.
 

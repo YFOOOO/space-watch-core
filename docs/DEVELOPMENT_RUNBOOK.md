@@ -31,11 +31,12 @@ the caller owns containment. Do not retain generated output in the release allow
 
 ## D1 local validation
 
-`src/space_watch_cloud/d1.py` owns the D1 preflight and one-shot acquisition state machine.
-Tests use only an injected synthetic adapter and must not access the three configured URLs.
-The live adapter, exact post-commit ref, packet hashes, disposable root, and budgets are bound
-only in a later Human-authorized dispatch. A caller that bypasses this entrypoint cannot claim
-a conforming D1 receipt.
+`src/space_watch_cloud/d1.py` owns the D1 preflight and one-shot acquisition state machine;
+`src/space_watch_cloud/http_adapter.py` owns the concrete standard-library request and typed
+projection boundary. Tests inject fake responses and must not access the three configured
+URLs. The exact post-commit ref, packet hashes, disposable root, and budgets are bound only in
+a later Human-authorized dispatch. Run only `tools/run_d1.py` for a conforming live attempt.
+A caller that bypasses this entrypoint cannot claim a conforming D1 receipt.
 
 ## Release contract
 

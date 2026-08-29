@@ -87,6 +87,9 @@ Human accepted a bounded `PARTIAL` D0 observation against exact public commit
 Human accepted the first D1 design scope of exactly three Flight 14 carriers and authorized
 local implementation and validation. The current candidate adds repository-enforced exact
 basis/hash/path/budget preflight and a single injected acquisition boundary that rejects
-redirects, login, search, alternate carriers, and retries. This is Evaluation evidence only.
+redirects, login, search, alternate carriers, and retries. After the first Grok capability
+probe reported that its public-web tool could not bind to the injected interface, the local
+candidate added a repository-owned standard-library exact-URI HTTP adapter and D1 CLI. This
+is Evaluation evidence only; no real carrier was accessed during local validation.
 D1 execution, commit, push, live-source access, Grok interaction, schedule, routine,
 notification, and project write remain unauthorized.

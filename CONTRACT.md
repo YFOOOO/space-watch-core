@@ -5,12 +5,13 @@ supervised Flight 14 public-source observation. D1 binds an exact repository bas
 exact public carriers, a Human-exported non-authoritative baseline, explicit attempt/runtime
 budgets, a disposable output path, and a Human Observation Review stop.
 
-The D1 library performs no acquisition by itself: the authorized executor must inject the
-single acquisition adapter. The orchestrator calls that boundary exactly once per frozen
-source and rejects redirects, login, search, alternate carriers, and retries. No D1 run is
-authorized by repository bytes. It cannot accept observations, create project truth, notify,
-schedule, persist cloud state, or write another repository. All candidates remain
-`accepted=false` and `project_truth=false`.
+The D1 CLI uses the repository-owned standard-library HTTP adapter. The orchestrator calls
+that boundary exactly once per frozen source. The adapter performs one exact-URI GET, follows
+no redirects, sends no credentials, exposes no search or alternate carrier, and reads at most
+1 MiB. Failure, redirect, overflow, or insufficient typed content becomes `unavailable`.
+No D1 run is authorized by repository bytes. It cannot accept observations, create project
+truth, notify, schedule, persist cloud state, or write another repository. All candidates
+remain `accepted=false` and `project_truth=false`.
 
 The caller/executor is responsible for choosing an approved disposable root and placing the
 requested output directory within it. The runner is not a filesystem sandbox: it guarantees
