@@ -1,0 +1,10 @@
+{
+  "accepted_as_comparison_baseline": true,
+  "baseline_file": "fixtures/d1-flight14-baseline.json",
+  "baseline_file_sha256": "f18b40552d5f34af21cc9855182f9a331a468132fb122cddba471d660b9d392f",
+  "designation_id": "d1-flight14-human-export-v0.1",
+  "historical_artifact_modified": false,
+  "mission_id": "starship-ift14",
+  "project_truth": false,
+  "schema_version": "space-watch-d1-comparison-baseline-designation-v0.1"
+}

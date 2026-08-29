@@ -1,0 +1,47 @@
+{
+  "accepted": false,
+  "candidates": [
+    {
+      "claim_family": "mission.window_status",
+      "projection_schema": "flight14-ll2-window-status-v0.1",
+      "source_id": "f14-ll2-current-observation",
+      "typed_content": {
+        "status_id": 2,
+        "status_name": "To Be Determined",
+        "window_precision": "month",
+        "window_value": "2026-09-TBD"
+      }
+    },
+    {
+      "claim_family": "booster.return",
+      "projection_schema": "flight14-fcc-booster-return-v0.1",
+      "source_id": "f14-fcc-1597-ex-st-2026",
+      "typed_content": {
+        "action": "return_to_launch_site",
+        "landing": "unavailable",
+        "tower_catch": "unavailable"
+      }
+    },
+    {
+      "claim_family": "ship.ground_test",
+      "projection_schema": "flight14-ship-ground-test-v0.1",
+      "source_id": "spacex-starship-six-engine-static-fire-2026-08-21",
+      "typed_content": {
+        "action": "full_duration_60_second_six_engine_static_fire",
+        "engine_count": 6,
+        "flight14_binding": "unavailable",
+        "ship_identity": "unavailable"
+      }
+    }
+  ],
+  "mission_id": "starship-ift14",
+  "next_authority": "Human Observation Review",
+  "project_effect": "none",
+  "project_truth": false,
+  "schema_version": "space-watch-d1-comparison-baseline-v0.1",
+  "source_project_basis": {
+    "commit": "52912acbe5e99a84798c9d357062aace200fe356",
+    "tree": "258c261faf9c8a6b2c3222827c140b51409f62e2",
+    "truth_carrier_sha256": "825c5e54c3fefb766a9f98bf2f14e7a7d582603a7c34480b7cf9fd68164f23a2"
+  }
+}

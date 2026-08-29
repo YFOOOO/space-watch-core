@@ -29,6 +29,14 @@ the caller owns containment. Do not retain generated output in the release allow
 7. Present the candidate, exact changed paths, hashes, and unavailable fields to Human Review.
 8. Do not commit or push unless that exact effect is separately authorized.
 
+## D1 local validation
+
+`src/space_watch_cloud/d1.py` owns the D1 preflight and one-shot acquisition state machine.
+Tests use only an injected synthetic adapter and must not access the three configured URLs.
+The live adapter, exact post-commit ref, packet hashes, disposable root, and budgets are bound
+only in a later Human-authorized dispatch. A caller that bypasses this entrypoint cannot claim
+a conforming D1 receipt.
+
 ## Release contract
 
 `release-files.json` is the only source inclusion authority. A release build adds only

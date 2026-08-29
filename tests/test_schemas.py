@@ -42,16 +42,19 @@ class SchemaTests(unittest.TestCase):
             self.assertFalse(document["additionalProperties"], path.name)
             ids.append(document["$id"])
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), 6)
+        self.assertEqual(len(ids), 9)
 
     def test_synthetic_fixtures_validate(self) -> None:
         pairs = [
             ("source-attempt-input.schema.json", "synthetic-source-input.json"),
             ("comparison-baseline.schema.json", "synthetic-baseline.json"),
             ("comparison-baseline-designation.schema.json", "synthetic-baseline-designation.json"),
+            ("d1-mission-profile.schema.json", "../config/d1-flight14-mission-profile.json"),
+            ("d1-source-policy.schema.json", "../config/d1-flight14-source-policy.json"),
         ]
         for schema_name, fixture_name in pairs:
-            jsonschema.Draft202012Validator(load(ROOT / "schemas" / schema_name), format_checker=jsonschema.FormatChecker()).validate(load(ROOT / "fixtures" / fixture_name))
+            fixture_path = ROOT / "fixtures" / fixture_name
+            jsonschema.Draft202012Validator(load(ROOT / "schemas" / schema_name), format_checker=jsonschema.FormatChecker()).validate(load(fixture_path.resolve()))
 
     def test_generated_artifacts_validate(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

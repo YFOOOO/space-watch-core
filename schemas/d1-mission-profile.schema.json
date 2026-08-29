@@ -1,0 +1,19 @@
+{
+  "$id": "space-watch-d1-mission-profile-v0.1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accepted": {"const": false},
+    "claim_families": {"items": {"type": "string"}, "minItems": 1, "type": "array", "uniqueItems": true},
+    "mission_id": {"const": "starship-ift14"},
+    "mission_name": {"type": "string"},
+    "next_authority": {"const": "Human Observation Review"},
+    "project_effect": {"const": "none"},
+    "project_truth": {"const": false},
+    "schema_version": {"const": "space-watch-d1-mission-profile-v0.1"},
+    "semantic_guards": {"items": {"type": "string"}, "minItems": 1, "type": "array", "uniqueItems": true},
+    "state": {"const": "FROZEN"}
+  },
+  "required": ["schema_version", "state", "mission_id", "mission_name", "claim_families", "semantic_guards", "accepted", "project_truth", "project_effect", "next_authority"],
+  "type": "object"
+}

@@ -1,0 +1,45 @@
+{
+  "accepted": false,
+  "acquisition_mode": "supervised_exact_public_carrier_one_shot",
+  "global_policy": {
+    "alternate_carrier_allowed": false,
+    "fail_closed": true,
+    "login_allowed": false,
+    "per_source_attempt_limit": 1,
+    "retry_allowed": false,
+    "search_allowed": false
+  },
+  "mission_id": "starship-ift14",
+  "next_authority": "Human Observation Review",
+  "on_unavailable": "record_unavailable_without_retry_or_substitution",
+  "project_effect": "none",
+  "project_truth": false,
+  "schema_version": "space-watch-d1-source-policy-v0.1",
+  "sources": [
+    {
+      "authority_limit": "observation_only_no_claim_promotion",
+      "claim_family": "mission.window_status",
+      "exact_uri": "https://ll.thespacedevs.com/2.3.0/launches/7d1afb26-6f9c-429b-9ccf-29012fd1e519/",
+      "projection_schema": "flight14-ll2-window-status-v0.1",
+      "source_id": "f14-ll2-current-observation",
+      "source_role": "launch_aggregator"
+    },
+    {
+      "authority_limit": "return_only_not_landing_catch_attempt_or_window",
+      "claim_family": "booster.return",
+      "exact_uri": "https://fcc.report/ELS/space-exploration-technologies-corp-spacex/1597-EX-ST-2026",
+      "projection_schema": "flight14-fcc-booster-return-v0.1",
+      "source_id": "f14-fcc-1597-ex-st-2026",
+      "source_role": "mission_specific_operator_regulatory_filing"
+    },
+    {
+      "authority_limit": "hardware_event_only_no_ship_identity_or_mission_binding",
+      "claim_family": "ship.ground_test",
+      "exact_uri": "https://x.com/SpaceX/status/2090876778646491549",
+      "projection_schema": "flight14-ship-ground-test-v0.1",
+      "source_id": "spacex-starship-six-engine-static-fire-2026-08-21",
+      "source_role": "operator_original_hardware_test"
+    }
+  ],
+  "state": "FROZEN"
+}

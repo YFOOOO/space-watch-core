@@ -1,13 +1,15 @@
 # Space Watch Core v0.2
 
-Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_PENDING`
+Status: `R0_REPOSITORY_FOUNDATION_PASS / C0_PARTIAL_ACCEPTED / D0_PARTIAL_ACCEPTED / D1_LOCAL_IMPLEMENTATION_CANDIDATE`
 
-This is a self-contained, public, generic, synthetic-only source repository. It is not an
+This is a self-contained public repository with the accepted synthetic comparison core and
+a locally validated D1 candidate for one supervised Flight 14 observation. It is not an
 effect request approval, an operational-state carrier, or a runnable cloud deployment.
 
-The release allowlist contains an offline comparison runner, schemas, synthetic fixtures,
-tests, and a deterministic build tool. Historical observations, receipts, packages, source
-URLs, project-derived baselines, and machine-specific evidence are excluded.
+The release allowlist contains the offline comparison runner, D1 exact-source policy and
+non-authoritative comparison export, fail-closed schemas/tests, and a deterministic build
+tool. Historical observations, receipts, packages, and machine-specific evidence are
+excluded.
 
 From this standalone repository root, local verification uses only already-available
 dependencies described in `DEPENDENCIES.md`:
@@ -26,9 +28,10 @@ non-escaping path relative to this standalone repository root as well as to its 
 Standalone release layout:
 
 - `AGENTS.md` and `docs/`: cold-start state, bounded Grok preflight, and development runbook;
-- `src/space_watch_cloud/`: deterministic comparison core;
-- `schemas/`: six fail-closed public JSON Schemas;
-- `fixtures/`: synthetic input, baseline, and independent hash-bound designation;
+- `config/`: frozen D1 mission profile and exact three-source policy;
+- `src/space_watch_cloud/`: deterministic comparison core and injected D1 acquisition boundary;
+- `schemas/`: synthetic and D1 fail-closed public JSON Schemas;
+- `fixtures/`: synthetic fixtures and the non-authoritative D1 comparison export;
 - `tests/`: runner, schema, publication-boundary, and reproducibility checks;
 - `tools/`: offline runner and deterministic release builder;
 - `release-files.json`: exact standalone allowlist;

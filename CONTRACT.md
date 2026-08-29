@@ -1,12 +1,16 @@
 # Space Watch Core v0.2 contract
 
-This repository candidate is a generic, offline, synthetic-only comparison core. It accepts
-frozen JSON input, a synthetic comparison baseline, and an independent hash-bound baseline
-designation, emits review candidates and an execution receipt, and stops at Human Review.
+This repository contains the accepted synthetic comparison core and a D1 candidate for one
+supervised Flight 14 public-source observation. D1 binds an exact repository basis, three
+exact public carriers, a Human-exported non-authoritative baseline, explicit attempt/runtime
+budgets, a disposable output path, and a Human Observation Review stop.
 
-It does not fetch sources, contain mission-specific URLs, accept observations, create project
-truth, access a network, notify, schedule, persist cloud state, or write another repository.
-All candidates remain `accepted=false` and `project_truth=false`.
+The D1 library performs no acquisition by itself: the authorized executor must inject the
+single acquisition adapter. The orchestrator calls that boundary exactly once per frozen
+source and rejects redirects, login, search, alternate carriers, and retries. No D1 run is
+authorized by repository bytes. It cannot accept observations, create project truth, notify,
+schedule, persist cloud state, or write another repository. All candidates remain
+`accepted=false` and `project_truth=false`.
 
 The caller/executor is responsible for choosing an approved disposable root and placing the
 requested output directory within it. The runner is not a filesystem sandbox: it guarantees

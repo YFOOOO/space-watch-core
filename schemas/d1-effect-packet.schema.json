@@ -1,0 +1,14 @@
+{
+  "$id": "space-watch-d1-effect-packet-v0.1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "$defs": {"git_oid": {"pattern": "^[0-9a-f]{40}$", "type": "string"}, "sha": {"pattern": "^[0-9a-f]{64}$", "type": "string"}},
+  "properties": {
+    "accepted": {"const": false}, "baseline_designation_file": {"type": "string"}, "baseline_designation_sha256": {"$ref": "#/$defs/sha"}, "baseline_file": {"type": "string"}, "baseline_sha256": {"$ref": "#/$defs/sha"},
+    "disposable_root": {"pattern": "^/", "type": "string"}, "mission_id": {"const": "starship-ift14"}, "next_authority": {"const": "Human Observation Review"}, "output_directory": {"pattern": "^/", "type": "string"}, "packet_id": {"type": "string"},
+    "per_source_timeout_seconds": {"minimum": 1, "type": "integer"}, "profile_file": {"type": "string"}, "profile_sha256": {"$ref": "#/$defs/sha"}, "project_effect": {"const": "none"}, "project_truth": {"const": false},
+    "repository_basis": {"additionalProperties": false, "properties": {"commit": {"$ref": "#/$defs/git_oid"}, "repository": {"const": "https://github.com/YFOOOO/space-watch-core"}, "tree": {"$ref": "#/$defs/git_oid"}}, "required": ["repository", "commit", "tree"], "type": "object"},
+    "requested_artifacts": {"items": {"type": "string"}, "maxItems": 9, "minItems": 9, "type": "array"}, "runtime_budget_seconds": {"minimum": 3, "type": "integer"}, "schema_version": {"const": "space-watch-d1-effect-packet-v0.1"}, "source_policy_file": {"type": "string"}, "source_policy_sha256": {"$ref": "#/$defs/sha"}, "stop_reason": {"const": "d1_human_observation_review"}, "total_attempt_budget": {"const": 3}
+  },
+  "required": ["schema_version", "packet_id", "repository_basis", "mission_id", "profile_file", "profile_sha256", "source_policy_file", "source_policy_sha256", "baseline_file", "baseline_sha256", "baseline_designation_file", "baseline_designation_sha256", "disposable_root", "output_directory", "total_attempt_budget", "per_source_timeout_seconds", "runtime_budget_seconds", "requested_artifacts", "accepted", "project_truth", "project_effect", "stop_reason", "next_authority"], "type": "object"
+}

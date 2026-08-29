@@ -1,0 +1,21 @@
+{
+  "accepted": false,
+  "claim_families": [
+    "mission.window_status",
+    "booster.return",
+    "ship.ground_test"
+  ],
+  "mission_id": "starship-ift14",
+  "mission_name": "Starship Flight 14",
+  "next_authority": "Human Observation Review",
+  "project_effect": "none",
+  "project_truth": false,
+  "schema_version": "space-watch-d1-mission-profile-v0.1",
+  "semantic_guards": [
+    "return_does_not_imply_landing_catch_or_attempt",
+    "hardware_does_not_imply_mission_binding",
+    "fcc_operation_period_is_not_launch_window",
+    "ll2_observation_cannot_promote_claim"
+  ],
+  "state": "FROZEN"
+}

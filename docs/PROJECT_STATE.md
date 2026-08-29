@@ -29,7 +29,7 @@ commit or remote effect still requires post-effect read-back and its own authori
 | R0 | Public repository foundation | PASS |
 | C0 | Grok Bot App capability preflight | PARTIAL_ACCEPTED_COMPLETE |
 | D0 | Supervised synthetic cloud demo | PARTIAL_ACCEPTED_COMPLETE |
-| D1 | Supervised live-source demo | PENDING |
+| D1 | Supervised live-source demo | LOCAL_IMPLEMENTATION_CANDIDATE |
 | O1 | Supervised schedule/routine | PENDING |
 | O2 | Formal operation | PENDING |
 
@@ -84,7 +84,9 @@ Human accepted a bounded `PARTIAL` D0 observation against exact public commit
 
 ## Next bounded transition
 
-The next candidate transition is a separately reviewed D1 single-mission live-source design.
-D1 execution remains unauthorized. The design must address mechanically enforced acquisition
-and retry boundaries before any live-source effect request. Never infer live-source, schedule,
-routine, notification, or later-phase authority from this public phase summary.
+Human accepted the first D1 design scope of exactly three Flight 14 carriers and authorized
+local implementation and validation. The current candidate adds repository-enforced exact
+basis/hash/path/budget preflight and a single injected acquisition boundary that rejects
+redirects, login, search, alternate carriers, and retries. This is Evaluation evidence only.
+D1 execution, commit, push, live-source access, Grok interaction, schedule, routine,
+notification, and project write remain unauthorized.

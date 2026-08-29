@@ -1,0 +1,28 @@
+{
+  "$id": "space-watch-d1-source-policy-v0.1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "$defs": {
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "authority_limit": {"type": "string"}, "claim_family": {"type": "string"},
+        "exact_uri": {"pattern": "^https://", "type": "string"}, "projection_schema": {"type": "string"},
+        "source_id": {"type": "string"}, "source_role": {"type": "string"}
+      },
+      "required": ["source_id", "exact_uri", "source_role", "claim_family", "projection_schema", "authority_limit"], "type": "object"
+    }
+  },
+  "properties": {
+    "accepted": {"const": false}, "acquisition_mode": {"const": "supervised_exact_public_carrier_one_shot"},
+    "global_policy": {
+      "additionalProperties": false,
+      "properties": {"alternate_carrier_allowed": {"const": false}, "fail_closed": {"const": true}, "login_allowed": {"const": false}, "per_source_attempt_limit": {"const": 1}, "retry_allowed": {"const": false}, "search_allowed": {"const": false}},
+      "required": ["login_allowed", "search_allowed", "alternate_carrier_allowed", "retry_allowed", "per_source_attempt_limit", "fail_closed"], "type": "object"
+    },
+    "mission_id": {"const": "starship-ift14"}, "next_authority": {"const": "Human Observation Review"},
+    "on_unavailable": {"const": "record_unavailable_without_retry_or_substitution"}, "project_effect": {"const": "none"}, "project_truth": {"const": false},
+    "schema_version": {"const": "space-watch-d1-source-policy-v0.1"}, "sources": {"items": {"$ref": "#/$defs/source"}, "maxItems": 3, "minItems": 3, "type": "array"}, "state": {"const": "FROZEN"}
+  },
+  "required": ["schema_version", "state", "mission_id", "acquisition_mode", "global_policy", "sources", "on_unavailable", "accepted", "project_truth", "project_effect", "next_authority"], "type": "object"
+}

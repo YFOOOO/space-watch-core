@@ -36,7 +36,7 @@ class PublicationBoundaryTests(unittest.TestCase):
         files = json.loads((ROOT / "release-files.json").read_text(encoding="utf-8"))["files"]
         url = re.compile(r"https?://(?!json-schema\.org/)")
         local = re.compile(r"/(Users|home)/")
-        exemptions = {"schemas/source-attempt-input.schema.json", "schemas/comparison-baseline.schema.json", "schemas/observation-candidate-bundle.schema.json", "schemas/execution-receipt.schema.json", "schemas/external-interaction-receipt.schema.json", "docs/GROK_CAPABILITY_PREFLIGHT.md"}
+        exemptions = {"schemas/source-attempt-input.schema.json", "schemas/comparison-baseline.schema.json", "schemas/observation-candidate-bundle.schema.json", "schemas/execution-receipt.schema.json", "schemas/external-interaction-receipt.schema.json", "schemas/d1-effect-packet.schema.json", "schemas/d1-source-policy.schema.json", "config/d1-flight14-source-policy.json", "docs/GROK_CAPABILITY_PREFLIGHT.md", "src/space_watch_cloud/d1.py", "tests/test_d1.py"}
         for relative in files:
             text = (ROOT / relative).read_text(encoding="utf-8")
             if relative not in exemptions:
