@@ -42,7 +42,7 @@ class SchemaTests(unittest.TestCase):
             self.assertFalse(document["additionalProperties"], path.name)
             ids.append(document["$id"])
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), 11)
+        self.assertEqual(len(ids), 15)
 
     def test_synthetic_fixtures_validate(self) -> None:
         pairs = [

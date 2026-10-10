@@ -37,3 +37,8 @@ directory. This containment makes the O1 output budget cover both D1 and O1 arti
 
 `release-files.json` is the exact publication allowlist. Files outside it are governance or
 local-freeze artifacts and are not part of the standalone release.
+
+The additive continuity/research adapter is an offline candidate, not an O1 replacement.
+Its pure transitions do not acquire sources, write project facts, or send messages. The
+caller owns single-writer persistence, external-effect authorization, and truthful delivery
+receipts. A research snapshot or an observed candidate cannot create Human acceptance.

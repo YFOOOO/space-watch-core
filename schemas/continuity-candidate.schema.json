@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "mission_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "candidate_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_basis": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "minProperties": 1
+    },
+    "facts_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "accepted": {
+      "const": false
+    },
+    "project_truth": {
+      "const": false
+    }
+  },
+  "required": [
+    "mission_id",
+    "candidate_id",
+    "source_basis",
+    "facts_sha256",
+    "accepted",
+    "project_truth"
+  ],
+  "additionalProperties": false,
+  "$id": "space-watch-continuity-candidate-v0.1"
+}
