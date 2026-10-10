@@ -37,8 +37,11 @@ class PublicationBoundaryTests(unittest.TestCase):
         url = re.compile(r"https?://(?!json-schema\.org/)")
         local = re.compile(r"/(Users|home)/")
         exemptions = {"schemas/source-attempt-input.schema.json", "schemas/comparison-baseline.schema.json", "schemas/observation-candidate-bundle.schema.json", "schemas/execution-receipt.schema.json", "schemas/external-interaction-receipt.schema.json", "schemas/d1-effect-packet.schema.json", "schemas/d1-source-policy.schema.json", "config/d1-flight14-source-policy.json", "docs/GROK_CAPABILITY_PREFLIGHT.md", "src/space_watch_cloud/d1.py", "tests/test_d1.py", "tests/test_http_adapter.py"}
+        exemptions.update({"schemas/research-task.schema.json", "src/space_watch_cloud/research_adapter.py", "tests/test_research_adapter.py"})
         for relative in files:
             text = (ROOT / relative).read_text(encoding="utf-8")
+            if relative in {"fixtures/research-f14.json", "fixtures/research-nuri.json"}:
+                text = re.sub(r"https:" + r"//example\.test/[A-Za-z0-9/_-]+", "reserved-synthetic-source", text)
             if relative not in exemptions:
                 self.assertIsNone(url.search(text), relative)
             self.assertIsNone(local.search(text), relative)

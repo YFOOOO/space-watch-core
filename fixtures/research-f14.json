@@ -1,0 +1,62 @@
+{
+  "schema_version": "research-readout-v1",
+  "as_of": "2026-10-10T00:00:00Z",
+  "source_last_updated": "2026-10-09",
+  "mission": {
+    "id": "synthetic-f14",
+    "name": "Synthetic Flight 14",
+    "record_available": true,
+    "aliases": [
+      "synthetic-f14",
+      "synthetic-f14-alias"
+    ]
+  },
+  "facts": {
+    "status": {
+      "name": "Synthetic pending"
+    },
+    "window": {
+      "net": "2026-11-01T00:00:00Z"
+    }
+  },
+  "sources": [
+    {
+      "source_id": "official",
+      "carrier_url": "https://example.test/mission",
+      "observed_at": "2026-10-09",
+      "limitation": "Synthetic fixture only"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "window-claim",
+      "evaluation_state": "candidate",
+      "family": "mission.window",
+      "evidence_refs": [
+        "official"
+      ],
+      "limitation": "Synthetic unverified plan"
+    }
+  ],
+  "basis": [
+    {
+      "ref": "window-claim",
+      "kind": "claim"
+    }
+  ],
+  "attention": {
+    "items": [
+      {
+        "id": "synthetic-f14",
+        "headline": "Synthetic attention",
+        "review": {
+          "checked_at": "2026-10-09",
+          "summary": "Review is not evidence"
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "Synthetic snapshot; no external verification"
+  ]
+}

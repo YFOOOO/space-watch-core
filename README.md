@@ -39,6 +39,11 @@ Standalone release layout:
 
 Project governance files and `local-freeze/` evidence remain outside the standalone release.
 
+An additive continuity/research-adapter candidate is described in
+`docs/CONTINUITY_ADAPTER.md`. It separates observation, candidate, and delivery state and
+consumes a caller-provided single-mission research readout. Existing O1/D1 behavior remains
+unchanged; this candidate does not establish operational acceptance.
+
 No command in this repository is authorized for cloud or network execution by repository
 text alone. Read `docs/PROJECT_STATE.md` before continuing. Public files record stable phase;
 the local private authority carrier owns the live Gate, next actor, and effect authorization.
